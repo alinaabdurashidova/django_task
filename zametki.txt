@@ -1,0 +1,42 @@
+from Author.models import Author
+Author.objects.create(name = 'I.S. Turgenev', born_on = '1818-11-09', psevdonim = 'Pisatel')
+<Author: I.S. Turgenev>
+>>> Author.objects.create(name = 'M.A. Bulgakov', born_on = '1891-05-15', psevdonim = 'Temnyi')
+<Author: M.A. Bulgakov>
+>>> Author.objects.create(name = 'A.S. Griboedov', born_on = '1795-01-15', psevdonim = 'Embassador')
+<Author: A.S. Griboedov>
+>>> from Book.models import Book
+>>> author1 = Author.objects.get(name = 'I.S. Turgenev')
+>>> author1
+<Author: I.S. Turgenev>
+>>> author2 = Author.objects.get(name = 'M.A. Bulgakov')
+>>> author2
+<Author: M.A. Bulgakov>
+>>> author3 = Author.objects.get(name = 'A.S. Griboedov')
+>>> author3
+<Author: A.S. Griboedov>
+>>> Author.objects.all()
+<QuerySet [<Author: I.S. Turgenev>, <Author: M.A. Bulgakov>, <Author: A.S. Griboedov>]>
+>>> Book.objects.create(title = 'Mumu', created_at = '1854-01-01', genre = 'fikshn', author = author1)
+<Book: Mumu>
+>>> Book.objects.create(title = 'Master and Margarita', created_at = '1967-01-01', genre = 'roman', author = author2)
+<Book: Master and Margarita>
+>>> Book.objects.create(title = 'Gore ot uma', created_at = '1819-01-01', genre = 'roman', author = author3)
+<Book: Gore ot uma>
+>>> Book.objects.all()
+<QuerySet [<Book: Mumu>, <Book: Master and Margarita>, <Book: Gore ot uma>]>
+>>> author2
+<Author: M.A. Bulgakov>
+>>> author2.psevdonim = 'Mikhail Bull'
+>>> author2.save()
+>>> Author.objects.get(psevdonim = 'Mikhail Bull')
+<Author: M.A. Bulgakov>
+>>> Book.objects.filter(title = 'Master and Margarita').update(title = 'Dogs hearts')
+1
+>>> Book.objects.get(author = author2)
+<Book: Dogs hearts>
+>>> book1 = Book.objects.get(title = 'Dogs hearts')
+>>> book1.delete()
+(1, {'Book.Book': 1})
+>>> Book.objects.all()
+<QuerySet [<Book: Mumu>, <Book: Gore ot uma>]>
